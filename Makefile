@@ -10,7 +10,7 @@ all:		$(TARGETS)
 
 test:		search test_search.sh
 	@echo Testing $<...
-	@./test_search.sh
+	@bash ./test_search.sh
 
 clean:
 	@echo Cleaning...
@@ -19,3 +19,20 @@ clean:
 .PHONY:		all test benchmark clean
 
 # TODO: Add rules for search and object files
+execute.o: execute.c search.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+filter.o: filter.c search.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+main.o: main.c search.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+search.o: search.c search.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+utilities.o: utilities.c search.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+search: execute.o filter.o main.o search.o utilities.o
+	$(LD) $(LDFLAGS) -o $@ $
