@@ -27,7 +27,7 @@ bool        is_directory_empty(const char *path) {
     }
     closedir(dir);
 
-    return count>2;
+    return !(count>2);
 }
 
 /**
@@ -44,3 +44,13 @@ time_t      get_mtime(const char *path) {
 }
 
 /* vim: set sts=4 sw=4 ts=8 expandtab ft=c: */
+
+int main(){
+    const char *path = "test";
+    time_t tim = get_mtime(path);
+    printf("%lu\n", tim);
+
+    bool test_empty = is_directory_empty(path);
+    printf("%d\n", test_empty);
+
+}

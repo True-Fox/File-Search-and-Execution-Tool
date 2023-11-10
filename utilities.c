@@ -30,7 +30,7 @@ bool        is_directory_empty(const char *path) {
     }
     closedir(dir);
 
-    return count>2;
+    return !(count>2);
 }
 
 /**
