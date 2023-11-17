@@ -1,56 +1,47 @@
+/* search.c */
+
+#include "search.h"
+
 #include <errno.h>
-#include <string.h>
-#include <time.h>
-#include <stdbool.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+#include <dirent.h>
 
 /**
- * Test whether or not a directory is empty.
- * @param   path        Path to directory.
- * @return  Whether or not a directory is empty.
+ * Recursively search through the provided root directory and list all directories
+ * @param   root        Path to directory
+ * @param   settings    Settings structure
+ * @return  Whether or not the search was successful.
  */
-bool        is_directory_empty(const char *path) {
+int search(const char *root, const Settings *settings) {
     DIR *dir;
     struct dirent *entry;
 
-    dir = opendir(path);
-    if(dir == NULL){
+    dir = opendir(root);
+    if (dir == NULL) {
         return -1;
     }
 
     int count = 0;
-    while((entry = readdir(dir)) != NULL){
-        count++;
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_type == DT_DIR) {
+            if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+                char path[PATH_MAX];
+                snprintf(path, sizeof(path), "%s/%s", root, entry->d_name);
+                printf("%s\n", path);
+
+                search(path, settings);
+            }
+        }
     }
     closedir(dir);
-
-    return !(count>2);
+    return EXIT_SUCCESS;
 }
 
-/**
- * Retrieve the modification time of the given file.
- * @param   path        Path to file of directory.
- * @return  The modification time of the given file.
- */
-time_t      get_mtime(const char *path) {
-    struct stat st;
-    if(stat(path, &st)!=0){
-        return -1;
-    }
-    return st.st_mtime;
-}
-
-/* vim: set sts=4 sw=4 ts=8 expandtab ft=c: */
-
-int main(){
-    const char *path = "test";
-    time_t tim = get_mtime(path);
-    printf("%lu\n", tim);
-
-    bool test_empty = is_directory_empty(path);
-    printf("%d\n", test_empty);
-
+int main() {
+    Settings s;
+    search("tests", &s);
+    return 0;
 }

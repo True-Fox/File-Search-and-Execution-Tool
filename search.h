@@ -12,6 +12,11 @@
 #define	    streq(s0, s1)   (strcmp((s0), (s1)) == 0)
 #define     debug(M, ...) \
     fprintf(stderr, "DEBUG %s:%d:%s: " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
+    
+#define EXECUTABLE  0x01
+#define READABLE    0x02
+#define WRITABLE    0x04
+
 
 /* Type definitions */
 
