@@ -99,29 +99,3 @@ bool filter(const char *path, const Settings *settings) {
 
     return false;
 }
-
-/*int main() {
-    Settings s;
-    s.access = READABLE | WRITABLE;
-    s.empty = false;
-    s.name = "*.txt";
-    s.path = NULL;
-    s.type = 0; 
-    s.perm = 0; 
-    s.newer = 0; 
-    s.uid = 0; 
-    s.gid = 0; 
-    s.print = false;
-    s.exec_argc = 0; 
-    s.exec_argv = NULL;
-
-    const char *samplePath = "/workspaces/a-search-tool/tests/1st level/2nd level/test.txt";
-
-    if (filter(samplePath, &s)) {
-        printf("The file should be excluded.\n");
-    } else {
-        printf("The file should not be excluded.\n");
-    }
-
-    return 0;
-}*/

@@ -71,7 +71,7 @@ int	    main(int argc, char *argv[]) {
                     exit(EXIT_FAILURE);
                 }
             } else if(strcmp(arg, "-empty")==0) settings.empty=true;
-            else if(strcmp(arg, '-name')==0){
+            else if(strcmp(arg, "-name")==0){
                 if(i+1 < argc){
                     i++;
                     settings.name = argv[i];
@@ -95,7 +95,39 @@ int	    main(int argc, char *argv[]) {
                     exit(EXIT_FAILURE);
                 }
             }else if(strcmp(arg, "-newer")==0){
-                
+                if(i+1 < argc){
+                    settings.newer = get_mtime(argv[i+1]);
+                    i++;
+                }else{
+                    fprintf(stderr, "Missing argument after -newer\n");
+                    exit(EXIT_FAILURE);
+                }
+            }else if(strcmp(arg, "-uid") == 0){
+                if(i+1 < argc){
+                    settings.uid = atoi(argv[i+1]);
+                    i++;
+                }else{
+                    fprintf(stderr, "Missing argument after -uid\n");
+                    exit(EXIT_FAILURE);    
+                }
+            }else if(strcmp(arg, "-gid")==0){
+                if(i+1 < argc){
+                    settings.gid = atoi(argv[i+1]);
+                    i++;
+                }else{
+                    fprintf(stderr, "Missing argument after -gid\n");
+                    exit(EXIT_FAILURE);
+                }
+            }else if(strcmp(arg, "-print")==0){
+                settings.print = true;
+            }else if(strcmp(arg, "-exec")==0){
+                if(i+2 < argc){
+                    settings.exec_argc = 2;
+                    settings.exec_argv = argv+i;
+                }else{
+                    fprintf(stderr, "Missing command after -exec\n");
+                    exit(EXIT_FAILURE);
+                }
             }
         }
     }

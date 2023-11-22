@@ -62,33 +62,3 @@ int	    execute(const char *path, const Settings *settings) {
 
     return 0;
 }
-
-int main() {
-    Settings s;
-    s.access = 0; // No access filtering
-    s.empty = false;
-    s.name = NULL;
-    s.path = NULL;
-    s.type = 0; // No type filtering
-    s.perm = 0; // No permission filtering
-    s.newer = 0; // No newer filtering
-    s.uid = 0; // No UID filtering
-    s.gid = 0; // No GID filtering
-    s.print = false; // Print the path
-    s.exec_argc = 1; // Example command: echo hello world
-    s.exec_argv = (char *[]){"echo", "hello", "world"};
-
-    // Provide a sample path
-    const char *samplePath = "/path/to/your/sample/file.txt";
-
-    // Test the execute function
-    int result = execute(samplePath, &s);
-
-    if (result == -1) {
-        printf("Error executing the command.\n");
-    } else {
-        printf("Execution successful. Exit status: %d\n", result);
-    }
-
-    return 0;
-}
