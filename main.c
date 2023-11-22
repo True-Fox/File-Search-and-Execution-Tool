@@ -45,7 +45,7 @@ int	    main(int argc, char *argv[]) {
         .newer = 0,
         .uid = -1,
         .gid = -1,
-        .print = false,
+        .print = true,
         .exec_argc = 0,
         .exec_argv = NULL
     };
@@ -131,6 +131,19 @@ int	    main(int argc, char *argv[]) {
             }
         }
     }
+
+        if (argc >= 2) {
+        const char *root_path = argv[1];
+        int search_result = search(root_path, &settings);
+
+        if (search_result == -1) {
+            perror("Search error");
+            return EXIT_FAILURE;
+        }
+    } else {
+        usage(argv[0], EXIT_FAILURE);
+    }
+
 
     return EXIT_SUCCESS;
 }
