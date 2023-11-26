@@ -22,9 +22,9 @@ Options:
 ```
 
 - Search for executable files and execute them:
-  ```bash
+```bash
   ./file_search_tool -type f -exec
-  ```
+```
 
 ### Note
 - The tool follows symbolic links by default. Use the `-no-follow-links` option to disable following symbolic links.
